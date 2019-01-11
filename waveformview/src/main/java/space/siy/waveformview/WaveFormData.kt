@@ -216,7 +216,7 @@ class WaveFormData private constructor(val sampleRate: Int, val channel: Int, va
             Log.i("WaveFormFactory", "Start building data.")
 
 
-            Thread({
+            Thread {
                 var EOS = false
                 val stream = ByteArrayOutputStream()
                 var info = MediaCodec.BufferInfo()
@@ -247,10 +247,10 @@ class WaveFormData private constructor(val sampleRate: Int, val channel: Int, va
                 codec.release()
                 Log.i("WaveFormFactory", "Built data in " + (System.currentTimeMillis() - startTime) + "ms")
                 val data = WaveFormData(outFormat.getInteger(MediaFormat.KEY_SAMPLE_RATE), outFormat.getInteger(MediaFormat.KEY_CHANNEL_COUNT), extractor.getTrackFormat(audioTrackIndex).getLong(MediaFormat.KEY_DURATION) / 1000, stream)
-                handler.post({
+                handler.post {
                     callback.onComplete(data)
-                })
-            }).start()
+                }
+            }.start()
         }
     }
 
